@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,7 +28,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.restapi.model.Kontak
+import com.example.restapi.ui.home.viewmodel.KontakUIState
 import com.example.restapi.R
+
+@Composable
+fun HomeScreen(
+    kontakUIState: KontakUIState, retryAction: () -> Unit, modifier: Modifier = Modifier
+) {
+    when (kontakUIState) {
+        is KontakUIState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+        is KontakUIState.Success -> KontakLayout(
+            kontak = kontakUIState.kontak, modifier =  modifier.fillMaxWidth()
+        )
+        is KontakUIState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
+
+    }
+}
 
 @Composable
 fun OnLoading(modifier: Modifier = Modifier) {
