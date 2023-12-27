@@ -30,8 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.restapi.model.Kontak
-import com.example.restapi.ui.home.viewmodel.KontakUIState
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.restapi.R
 
 @Composable
@@ -44,7 +43,6 @@ fun HomeScreen(
             kontak = kontakUIState.kontak, modifier =  modifier.fillMaxWidth()
         )
         is KontakUIState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
-
     }
 }
 
@@ -78,6 +76,8 @@ fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier) {
 fun KontakLayout(
     kontak: List<Kontak>,
     modifier: Modifier = Modifier,
+    onDetailClick: (Kontak) -> Unit,
+    onDeleteClick: (Kontak) -> Unit = {}
 ) {
     LazyColumn(
         modifier = modifier,
@@ -89,7 +89,9 @@ fun KontakLayout(
                 kontak = kontak,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable {  }
+                    .clickable { onDetailClick(kontak) },
+                onDeleteClick = {
+                    onDeleteClick(kontak)}
             )
         }
     }
