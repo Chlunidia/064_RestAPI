@@ -86,7 +86,6 @@ fun HomeScreen(
                 viewModel.getKontak()
             },
             modifier = Modifier.padding(innerPadding),
-
             onDetailClick = onDetailClick,
             onDeleteClick = {
                 viewModel.deleteKontak(it.id)
